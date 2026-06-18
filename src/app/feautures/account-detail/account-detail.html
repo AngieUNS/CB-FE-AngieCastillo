@@ -1,0 +1,42 @@
+<div class="max-w-md mx-auto mt-8 font-sans">
+  <h1 class="text-xl font-bold text-slate-800 mb-4">Consultar cuenta</h1>
+
+  <div class="flex gap-2 mb-6">
+    <input
+      type="number"
+      [(ngModel)]="searchId"
+      (keyup.enter)="searchId && searchId > 0 ? onSearch() : null"
+      placeholder="Ingresa el ID de la cuenta"
+      min="1"
+      class="flex-1 px-3.5 py-2.5 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-colors"
+    />
+    <button
+      (click)="onSearch()"
+      [disabled]="!searchId || searchId <= 0"
+      class="px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+      Buscar
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="flex items-center gap-2 px-4 py-3 mb-4 bg-slate-100 text-slate-600 text-sm rounded-lg">
+    <span class="w-3.5 h-3.5 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin"></span>
+    Cargando...
+  </div>
+
+  <div *ngIf="error" class="px-4 py-3 mb-4 bg-red-50 text-red-700 text-sm border border-red-200 rounded-lg">
+    ⚠️ {{ error }}
+  </div>
+
+  <div *ngIf="account" class="bg-white border border-slate-200 rounded-xl px-6 py-5 shadow-sm">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-slate-800">Cuenta {{ account.accountNumber }}</h2>
+      <span class="px-2.5 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full">
+        ID: {{ account.id }}
+      </span>
+    </div>
+    <div class="flex flex-col gap-1">
+      <span class="text-sm text-slate-500">Balance</span>
+      <span class="text-2xl font-bold text-green-600">{{ account.balance | currency }}</span>
+    </div>
+  </div>
+</div>
